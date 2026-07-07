@@ -1,0 +1,155 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!45!black]{hyperref}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\code}{\smallskip\par\noindent\textbf{Computational task.}\ }
+\newcommand{\deliverable}{\smallskip\par\noindent\textbf{Repo deliverable.}\ }
+\newcommand{\challenge}{\smallskip\par\noindent\textbf{Challenge (optional).}\ }
+\newcommand{\tut}[2]{\section*{Tutorial #1\quad{\normalsize\mdseries(#2)}}\addcontentsline{toc}{section}{Tutorial #1 --- #2}}
+
+\setlist[enumerate]{itemsep=3pt,topsep=4pt}
+\setlist[itemize]{itemsep=2pt,topsep=3pt}
+
+\title{\vspace{-1.5em}\textbf{Mathematical Modelling --- Tutorials}\\[3pt]
+\large Weeks 1--6}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2em}
+
+\noindent\rule{\textwidth}{0.4pt}
+\begin{small}
+\textbf{How these tutorials work.} Each tutorial has pen-and-paper parts and a \emph{computational task} that you carry out in whatever language you prefer (MATLAB is recommended; Python or Julia are equally fine). The point of the code is never the language --- it is that a classmate can regenerate your figure from your folder. Each week you add a folder \texttt{week-NN/<username>/} to the course tutorials repository, containing a half-page \texttt{report.md}, the figure(s) requested, the code that produced them, and a short \texttt{README} giving the command to regenerate them. You submit this as a pull request and review one classmate's in return (see the repository's \texttt{CONTRIBUTING.md}). Parts marked \emph{Challenge} are optional, for the motivated or when time allows. Chapter and appendix references are to the course notes.
+\end{small}
+\noindent\rule{\textwidth}{0.4pt}
+
+% ======================================================================
+\tut{1}{Week 1 --- Dimensional analysis in practice}
+
+\emph{Notes: Chapter on dimensional analysis.} This week also serves as your onboarding to the course repository.
+
+\begin{enumerate}
+\item Rederive, by dimensional analysis alone, the period of a simple pendulum $T=\sqrt{L/g}\,\Phi(\theta_0)$, stating clearly what the method fixes and what it leaves in the unknown function $\Phi$.
+\item Pick one further system --- the frequency of a mass on a spring, the speed of deep-water waves, or the draining time of a tank --- and carry out the same analysis: list the variables, form the dimensionless groups, and state precisely what is predicted and what is left undetermined.
+\item A rigid-body (compound) pendulum has period $T=2\pi\sqrt{L_{\mathrm{eff}}/g}$ with $L_{\mathrm{eff}}=I/(mR)$. Without computing any moment of inertia, explain why dimensional analysis already guarantees the $\sqrt{L_{\mathrm{eff}}/g}$ dependence.
+\end{enumerate}
+
+\code Taylor's blast-wave argument predicts $R=C\,(E t^2/\rho)^{1/5}$ for the radius $R$ of a blast at time $t$. Generate a synthetic ``photographic'' data set: fix $\rho=1.2$, choose an energy $E$ (keep it secret from your reviewer), compute $R(t)$ at a dozen times, and add a few percent of random noise. Now \emph{pretend you do not know $E$}: fit a straight line to $\log R$ versus $\log t$, check that the slope is close to $2/5$, and recover $E$ from the intercept. Report how close your estimate is to the true $E$.
+
+\deliverable Your fitting code, a log--log plot showing the data and the fitted line, and a \texttt{report.md} stating the recovered slope and energy. This is your first pull request --- get the workflow working now, while the mathematics is easy.
+
+% ======================================================================
+\tut{2}{Week 2 --- Nondimensionalisation and the phase plane}
+
+\emph{Notes: Chapter on nondimensionalisation; Appendix on linear stability.}
+
+\begin{enumerate}
+\item The pendulum with natural frequency $\omega$ is $\ddot\theta+\omega^2\sin\theta=0$. Show that scaling time by $1/\omega$ removes $\omega$ entirely, so that assuming $\omega=1$ costs nothing. (This answers the standing question, ``why may we set $\omega=1$?'')
+\item Write the damped pendulum as the first-order system $\dot x=y,\ \dot y=-\sin x-c\,y$. Find all equilibria. Using the Jacobian and the trace--determinant classification (Appendix), determine the type and stability of the downward equilibrium $(0,0)$ for $c=0$, for $0<c<2$, and for $c>2$, and of the upright equilibrium $(\pi,0)$. Compute the eigenvectors at the upright saddle.
+\end{enumerate}
+
+\code Plot the phase portrait (direction field plus a few trajectories) of the damped pendulum for $c=0$, $c=0.3$, and $c=3$. (MATLAB users may find the ready-made \texttt{dfield}/\texttt{pplane} tools convenient; in another language, a short script pairing a direction-field plot --- a \texttt{quiver} or \texttt{streamplot} --- with an ODE integrator does the same job.) Confirm visually the centre, the stable spiral, and the stable node at the downward equilibrium, and the saddle at the upright one.
+
+\challenge Add a control torque to make the \emph{upright} position stable: with $F=a\,\phi+b\,\dot\phi$ (where $\phi=\theta-\pi$ measures displacement from upright), the linearised motion becomes $\ddot\phi+p\,\dot\phi+q\,\phi=0$. Find $p$ and $q$ in terms of $a,b,c,m,L,g$, and shade the region of the $(a,b)$-plane where the upright position is stable (i.e.\ $p>0$ and $q>0$). Interpret: what must the controller supply?
+
+\deliverable The phase-portrait figure(s), and a \texttt{report.md} listing the equilibria with their types. If you did the challenge, include the $(a,b)$ stability region.
+
+% ======================================================================
+\tut{3}{Week 3 --- Amplitude and period of a nonlinear oscillator}
+
+\emph{Notes: Chapter on regular perturbation --- Poincar\'e--Lindstedt and the energy method.}
+
+For the undamped pendulum $\ddot\theta+\sin\theta=0$ released from rest at amplitude $\theta_0$:
+\begin{enumerate}
+\item Using energy conservation, show that $\dot\theta^2=2(\cos\theta-\cos\theta_0)$, and hence that the period is the quadrature
+\[
+T(\theta_0)=4\int_0^{\theta_0}\frac{\dd\theta}{\sqrt{2(\cos\theta-\cos\theta_0)}} .
+\]
+\item Recall the Poincar\'e--Lindstedt prediction $T\approx 2\pi\bigl(1+\tfrac{1}{16}\theta_0^2\bigr)$, and the small-amplitude (linear) value $T=2\pi$.
+\end{enumerate}
+
+\code Evaluate the exact period $T(\theta_0)$ numerically for $\theta_0$ from small up to near $\pi$ (watch the integrable singularity at the upper limit). On one figure plot three curves: the exact $T(\theta_0)$, the linear value $2\pi$, and the Poincar\'e--Lindstedt approximation. Identify the amplitude beyond which the perturbative curve visibly departs from the exact one --- this is the function $\Phi(\theta_0)$ of Tutorial~1, now computed.
+
+\deliverable The period-versus-amplitude figure and a \texttt{report.md} commenting on the range of validity of the small-amplitude and Poincar\'e--Lindstedt models.
+
+% ======================================================================
+\tut{4}{Week 4 --- Slow--fast systems and relaxation oscillations}
+
+\emph{Notes: Chapter on multiple scales and slow--fast reduction.}
+
+Consider the Van der Pol oscillator $\ddot v-\mu(1-v^2)\dot v+v=0$.
+\begin{enumerate}
+\item Put it in Li\'enard slow--fast form and identify the critical (slow) manifold $y=\tfrac13 v^3-v$ and its folds at $v=\pm1$. Which branches are attracting?
+\item Predict, from the shape of the manifold, the qualitative motion for large $\mu$ (slow crawls, fast jumps).
+\end{enumerate}
+
+\code Integrate the Van der Pol equation numerically for $\mu=0.1,\ 1,\ 5,\ 20$. For each, plot $v(t)$ and the phase-plane trajectory, and comment on the transition from near-sinusoidal to relaxation behaviour. Overlay the critical manifold on the phase plane for the large-$\mu$ case, and estimate the period as a function of $\mu$; compare with the large-$\mu$ asymptotic period $(3-2\ln2)\mu$.
+
+\challenge Start the trajectory \emph{off} the critical manifold and show the fast initial transient that quasi-steady-state reduction misses; explain the failure using Tikhonov's condition from the notes.
+
+\deliverable The waveform and phase-portrait figures, and a \texttt{report.md} on the sinusoidal-to-relaxation transition and your period estimates.
+
+% ======================================================================
+\tut{5}{Week 5 --- Building a model: traffic}
+
+\emph{Notes: Chapter on balance laws and closures; bifurcations as predictions.}
+
+The car-following model is $\dot h_i=v_{i+1}-v_i$, $\dot v_i=\alpha\bigl(V(h_i)-v_i\bigr)$, with the optimal-velocity closure
+\[
+V(h)=V_t\,\frac{[(h-h_{\min})/s]^k}{1+[(h-h_{\min})/s]^k}\quad(h>h_{\min}),\qquad V=0\ (h\le h_{\min}).
+\]
+\begin{enumerate}
+\item Plot $V(h)$ for $h_{\min}=10\,$m, $V_t=100\,$km/h, and explore its shape: $k=1$ with $s=1$, $s<1$, $s>1$; then $s=1$ with $k=2,3,4$. Argue why $k=3,\,s=1$ makes a reasonable model of a ``normal'' driver.
+\item On a ring road of length $L$ with $n$ cars, the uniform-flow state has headway $h^\ast=L/n$ and speed $V(h^\ast)$. Show that gridlock (all cars stopped) occurs when $L\le n\,h_{\min}$. Derive the flow rate $r(h)=V(h)/h$ and show its maximum satisfies $V'(h^\ast)=V(h^\ast)/h^\ast$.
+\end{enumerate}
+
+\code Simulate the ring-road system for, say, $n=20$ cars. Start close to uniform flow, add a small perturbation to one car, and integrate. Show that smooth flow persists when $V'(h^\ast)<\tfrac12\alpha$ but breaks into a travelling stop-and-go wave when $V'(h^\ast)>\tfrac12\alpha$ (a phantom jam). Separately, plot the fundamental diagram $r(h)$ and mark the maximum-flow headway.
+
+\deliverable A space--time plot (car position or headway versus time) showing a jam forming, the fundamental-diagram figure, and a \texttt{report.md} relating the jam onset to the stability criterion.
+
+% ======================================================================
+\tut{6}{Week 6 --- Reading and improving a model (capstone launch)}
+
+\emph{Notes: Chapter on reading and improving a model. This tutorial launches the half-assessment capstone; see the capstone brief for the full requirements.}
+
+The capstone asks you to reconstruct a model, criticise it, and improve it so that it makes a new, checkable prediction. You may build it on \emph{either} of two models (as set out in the capstone brief):
+\begin{itemize}
+\item \textbf{traffic} --- the car-following model of Tutorial~5 (recommended, since you have already built and simulated it); or
+\item \textbf{the Van der Pol oscillator} --- the circuit model of the notes, extended by forcing or coupling.
+\end{itemize}
+This week you take the first steps for your chosen model.
+\begin{enumerate}
+\item \emph{Reconstruct.} From the stated assumptions, rebuild the model in your own notation, and separate the exact balance law from the constitutive closure. (Traffic: headway bookkeeping versus the optimal-velocity function $V(h)$. Van der Pol: Kirchhoff's current law versus the nonlinear characteristic $f$, yielding $\ddot v-\mu(1-v^2)\dot v+v=0$.)
+\item \emph{Critique, and choose an improvement.} Identify the weakest assumption and propose one improvement --- stated as a \emph{prediction}, a qualitative transition your improved model forecasts. (Traffic: a reaction-time delay, predicting a shifted jamming threshold; or a slow driver, predicting a bottleneck. Van der Pol: forcing, predicting frequency locking; or coupling, predicting an entrainment threshold.)
+\end{enumerate}
+
+\code Reproduce one result of the base model numerically --- the ring-road jam of Tutorial~5, or the relaxation waveform of the oscillator. Then take the first step of your improvement and produce a figure that begins to test its prediction. This is the seed of your capstone repository.
+
+\deliverable Start your own capstone repository under the course organisation, containing the reproduced base result, a first improvement figure, and a \texttt{README} outlining your intended critique and improvement. (This grows into the half-assessment submission.)
+
+% ======================================================================
+\tut{$\star$}{Optional challenge --- Modelling on networks}
+
+\emph{Not required; a self-contained topic for the motivated, or if time allows. It is deliberately discrete, in contrast to the continuous models of the course.}
+
+Consider a transport network specified by a matrix of edge capacities $c_{ij}$, with a source node $s$ and a target node $t$ (your instructor will provide a specific network, or invent your own $7$-node example).
+\begin{enumerate}
+\item Draw the network from its capacity matrix.
+\item Interpreting $c_{ij}$ as the capacity of the edge from $i$ to $j$, find the maximum flow that can be routed from $s$ to $t$, and identify the bottleneck (the minimum cut).
+\item What happens to the maximum flow if every capacity is scaled by a positive constant $b$? If every capacity is squared?
+\end{enumerate}
+
+\code Implement, or use a library routine for, the max-flow (and, if you like, shortest-path) computation. Verify it by hand on a small graph first, then explore the scaling questions above numerically. A short discussion of the max-flow/min-cut duality makes a good report.
+
+\deliverable Your code, a drawing of the network with the maximum flow marked on each edge, and a \texttt{report.md} answering the scaling questions.
+
+\end{document}
