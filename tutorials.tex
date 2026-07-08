@@ -28,7 +28,7 @@
 
 \noindent\rule{\textwidth}{0.4pt}
 \begin{small}
-\textbf{How these tutorials work.} Each tutorial has pen-and-paper parts and a \emph{computational task} that you carry out in whatever language you prefer (MATLAB is recommended; Python or Julia are equally fine). The point of the code is never the language --- it is that a classmate can regenerate your figure from your folder. Each week you add a folder \texttt{week-NN/<username>/} to the course tutorials repository, containing a half-page \texttt{report.md}, the figure(s) requested, the code that produced them, and a short \texttt{README} giving the command to regenerate them. You submit this as a pull request and review one classmate's in return (see the repository's \texttt{CONTRIBUTING.md}). Parts marked \emph{Challenge} are optional, for the motivated or when time allows. Chapter and appendix references are to the course notes.
+\textbf{How these tutorials work.} Each tutorial has pen-and-paper parts and a \emph{computational task} that you carry out in whatever language you prefer (MATLAB is recommended; Python or Julia are equally fine). The point of the code is never the language --- it is that a classmate can regenerate your figure from your folder. Each week you add a folder \texttt{week-NN/<username>/} to the course tutorials repository, containing a half-page \texttt{report.md}, the figure(s) requested, the code that produced them, and a short \texttt{README} giving the command to regenerate them. You submit this as a pull request and review one classmate's in return (see the repository's \texttt{CONTRIBUTING.md}). Parts marked \emph{Challenge} are optional, for the motivated or when time allows. Chapter and appendix references are to the course notes. Every \texttt{report.md} should also close with one sentence of \emph{interpretation}: what does your result mean for the real system you modelled, and not merely as a piece of mathematics?
 \end{small}
 \noindent\rule{\textwidth}{0.4pt}
 
@@ -40,12 +40,12 @@
 \begin{enumerate}
 \item Rederive, by dimensional analysis alone, the period of a simple pendulum $T=\sqrt{L/g}\,\Phi(\theta_0)$, stating clearly what the method fixes and what it leaves in the unknown function $\Phi$.
 \item Pick one further system --- the frequency of a mass on a spring, the speed of deep-water waves, or the draining time of a tank --- and carry out the same analysis: list the variables, form the dimensionless groups, and state precisely what is predicted and what is left undetermined.
-\item A rigid-body (compound) pendulum has period $T=2\pi\sqrt{L_{\mathrm{eff}}/g}$ with $L_{\mathrm{eff}}=I/(mR)$. Without computing any moment of inertia, explain why dimensional analysis already guarantees the $\sqrt{L_{\mathrm{eff}}/g}$ dependence.
+\item A rigid-body (compound) pendulum --- an extended rigid object swinging about a pivot --- has small-amplitude period $T=2\pi\sqrt{L_{\mathrm{eff}}/g}$, where $g$ is gravity and $L_{\mathrm{eff}}=I/(mR)$ is its \emph{effective length}, built from the body's mass $m$, its moment of inertia $I$ about the pivot, and the pivot-to-centre-of-mass distance $R$ (see the notes, Chapter 6). Without computing any moment of inertia, explain why dimensional analysis already guarantees the $\sqrt{L_{\mathrm{eff}}/g}$ dependence.
 \end{enumerate}
 
-\code Taylor's blast-wave argument predicts $R=C\,(E t^2/\rho)^{1/5}$ for the radius $R$ of a blast at time $t$. Generate a synthetic ``photographic'' data set: fix $\rho=1.2$, choose an energy $E$ (keep it secret from your reviewer), compute $R(t)$ at a dozen times, and add a few percent of random noise. Now \emph{pretend you do not know $E$}: fit a straight line to $\log R$ versus $\log t$, check that the slope is close to $2/5$, and recover $E$ from the intercept. Report how close your estimate is to the true $E$.
+\code Taylor's blast-wave argument predicts $R=C\,(E t^2/\rho)^{1/5}$ for the radius $R$ of a blast at time $t$. Generate a synthetic ``photographic'' data set: fix $\rho=1.2$ and take the constant $C=1$ (its theoretical value), choose an energy $E$, compute $R(t)$ at a dozen times, and add a few percent of random noise to mimic measurement error. Now \emph{pretend you do not know $E$}: fit a straight line to $\log R$ versus $\log t$, check that the slope is close to $2/5$, and recover $E$ from the intercept (with $C=1$ and $\rho$ known, the intercept gives $E/\rho$). Report how close your estimate is to the true $E$.
 
-\deliverable Your fitting code, a log--log plot showing the data and the fitted line, and a \texttt{report.md} stating the recovered slope and energy. This is your first pull request --- get the workflow working now, while the mathematics is easy.
+\deliverable Your fitting code, a log--log plot showing the data and the fitted line, and a \texttt{report.md} stating the recovered slope and energy --- closing with what this shows: that a handful of photographs, plus dimensional analysis alone, suffice to weigh an explosion. This is your first pull request --- get the workflow working now, while the mathematics is easy.
 
 % ======================================================================
 \tut{2}{Week 2 --- Nondimensionalisation and the phase plane}
@@ -53,15 +53,15 @@
 \emph{Notes: Chapter on nondimensionalisation; Appendix on linear stability.}
 
 \begin{enumerate}
-\item The pendulum with natural frequency $\omega$ is $\ddot\theta+\omega^2\sin\theta=0$. Show that scaling time by $1/\omega$ removes $\omega$ entirely, so that assuming $\omega=1$ costs nothing. (This answers the standing question, ``why may we set $\omega=1$?'')
-\item Write the damped pendulum as the first-order system $\dot x=y,\ \dot y=-\sin x-c\,y$. Find all equilibria. Using the Jacobian and the trace--determinant classification (Appendix), determine the type and stability of the downward equilibrium $(0,0)$ for $c=0$, for $0<c<2$, and for $c>2$, and of the upright equilibrium $(\pi,0)$. Compute the eigenvectors at the upright saddle.
+\item The pendulum can be written $\ddot\theta+\omega^2\sin\theta=0$, where $\omega^2=g/L$ is the squared natural frequency --- this is simply the notes' equation $L\ddot\theta+g\sin\theta=0$ divided by $L$. Show that rescaling time by $1/\omega$ turns it into $\theta''+\sin\theta=0$, with $\omega$ gone entirely. Conclude that setting $\omega=1$ loses no generality --- any $\omega$ can be scaled away --- which is why we may always do it. (This answers the standing question, ``why may we set $\omega=1$?'')
+\item Write the nondimensional damped pendulum $\theta''+c\,\theta'+\sin\theta=0$, in which $c\ge0$ measures the damping, as the first-order system $\dot x=y,\ \dot y=-\sin x-c\,y$. Find all equilibria. Using the Jacobian and the trace--determinant classification (Appendix A), determine the type and stability of the downward equilibrium $(0,0)$ for $c=0$, for $0<c<2$, and for $c>2$, and of the upright equilibrium $(\pi,0)$. Compute the eigenvectors at the upright saddle.
 \end{enumerate}
 
 \code Plot the phase portrait (direction field plus a few trajectories) of the damped pendulum for $c=0$, $c=0.3$, and $c=3$. (MATLAB users may find the ready-made \texttt{dfield}/\texttt{pplane} tools convenient; in another language, a short script pairing a direction-field plot --- a \texttt{quiver} or \texttt{streamplot} --- with an ODE integrator does the same job.) Confirm visually the centre, the stable spiral, and the stable node at the downward equilibrium, and the saddle at the upright one.
 
 \challenge Add a control torque to make the \emph{upright} position stable: with $F=a\,\phi+b\,\dot\phi$ (where $\phi=\theta-\pi$ measures displacement from upright), the linearised motion becomes $\ddot\phi+p\,\dot\phi+q\,\phi=0$. Find $p$ and $q$ in terms of $a,b,c,m,L,g$, and shade the region of the $(a,b)$-plane where the upright position is stable (i.e.\ $p>0$ and $q>0$). Interpret: what must the controller supply?
 
-\deliverable The phase-portrait figure(s), and a \texttt{report.md} listing the equilibria with their types. If you did the challenge, include the $(a,b)$ stability region.
+\deliverable The phase-portrait figure(s), and a \texttt{report.md} listing the equilibria with their types --- and saying what each means physically (the bob hanging straight down is stable; balanced upright it is not, which is why the challenge needs active control). If you did the challenge, include the $(a,b)$ stability region.
 
 % ======================================================================
 \tut{3}{Week 3 --- Amplitude and period of a nonlinear oscillator}
