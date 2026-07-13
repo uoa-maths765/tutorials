@@ -1,1 +1,1 @@
-You need to run "run" in your machine
+You need to run "run" in your machine or it won't work
