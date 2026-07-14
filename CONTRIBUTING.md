@@ -3,7 +3,7 @@
 This file defines how work is submitted and reviewed. The whole point is to practise a
 real collaborative workflow, so we follow it even though the tasks are small.
 
-## Language policy
+## Programming Language 
 
 **Use whatever language you're most comfortable in.** Python, MATLAB, Julia, R — all fine,
 and you may switch week to week. What is *not* optional is that someone else can run your
@@ -13,12 +13,12 @@ code and get your figure. Reproducibility is the skill; the language is not.
 
 1. **Sync** with the latest `main`:
    ```
-   git checkout main
+   git switch main
    git pull
    ```
 2. **Branch**, named `week<NN>-<username>`:
    ```
-   git checkout -b week01-jpatinoe
+   git switch -c week01-<username>
    ```
 3. **Work** inside `week<NN>/<username>/`. Include:
    - `report.md` — half-page model report (model, reduction, justification, breakdown).

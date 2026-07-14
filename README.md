@@ -2,7 +2,7 @@
 
 Shared repository for the weekly tutorial work in the Mathematical Modelling course
 (Weeks 1–6). This is where you practise building small models, producing figures, and
-working the way real teams work: version control, pull requests, and code review.
+working the way teams work: version control, pull requests, and code review.
 
 ## The one rule that matters: reproducibility
 
@@ -39,7 +39,7 @@ Each week you add **one folder** under that week, named with your username.
 ## Workflow (every week)
 
 1. Pull the latest `main`.
-2. Branch: `git checkout -b week01-<username>`.
+2. Branch: `git switch -c week01-<username>`.
 3. Do the work in your folder.
 4. Commit and push; open a **pull request**.
 5. You'll be **assigned to review** a classmate's PR — check that you can rerun their
@@ -49,5 +49,5 @@ See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the details and the review checkl
 
 ## Getting help
 
-Open an issue with the `question` label, or ask in the tutorial. Struggling with Git is
+Open an issue with the `question` label, or ask in the tutorial. Struggling with Git/GitHub is
 expected in Week 1 — that's what the first tutorial is for.
