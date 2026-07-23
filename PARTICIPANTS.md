@@ -5,3 +5,4 @@
 | George Douglas | gdou663 | George-Douglas |
 | Flynn Cunningham-Beentjes | fcun012 | CatastrophicValueError |
 | Kevan Lew | klew478 | kevanlew |
+| Maya Sosa | msos245 | greyelephant02 |
