@@ -10,3 +10,4 @@
 | Flynn Cunningham-Beentjes | fcun012 | CatastrophicValueError |
 | Kevan Lew | klew478 | kevanlew |
 | Maya Sosa | msos245 | greyelephant02 |
+| Jonty De Pledge | jdep361 | JontyDePledge |
