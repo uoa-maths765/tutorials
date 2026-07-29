@@ -5,6 +5,7 @@
 | Emile Jorna | ejor475 | emilesj |
 | George Douglas | gdou663 | George-Douglas |
 | Rata Lomax | rlom024 | rata-lomax |
+| Molly Dyer | mdye515 | mdye515 |
 | Armaan Chopra | acho645 | armcho24 |
 | Sheetal Ignatius | sign105 | sheetalsarah |
 | Flynn Cunningham-Beentjes | fcun012 | CatastrophicValueError |
