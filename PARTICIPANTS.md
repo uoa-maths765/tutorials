@@ -8,5 +8,6 @@
 | Armaan Chopra | acho645 | armcho24 |
 | Sheetal Ignatius | sign105 | sheetalsarah |
 | Flynn Cunningham-Beentjes | fcun012 | CatastrophicValueError |
+| Zoey Sheng | zshe992 | BugBiteSquared |
 | Kevan Lew | klew478 | kevanlew |
 | Maya Sosa | msos245 | greyelephant02 |
